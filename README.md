@@ -1,7 +1,7 @@
 # RF
 
 - [x] Deve ser possível criar um usuário
-- [ ] Deve ser possível registrar uma refeição feita, com as seguintes informações:
+- [x] Deve ser possível registrar uma refeição feita, com as seguintes informações:
   - nome
   - descricao
   - data e hora
@@ -18,5 +18,6 @@
 
 # RN
 
+- [x] As refeições devem ser relacionadas a um usuário.
 - [ ] Deve ser possível identificar o usuário entre as requisições
 - [ ] O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
