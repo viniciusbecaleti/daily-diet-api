@@ -1,7 +1,6 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance } from 'fastify'
+import MealController from '../controllers/MealController'
 
 export async function mealsRoutes(app: FastifyInstance) {
-  app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-    return reply.send({ meals: [] })
-  })
+  app.post('/', MealController.store)
 }
