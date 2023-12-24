@@ -1,7 +1,6 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance } from 'fastify'
+import UserController from '../controllers/UserController'
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-    return reply.send({ users: [] })
-  })
+  app.post('/', UserController.store)
 }
