@@ -18,6 +18,14 @@ class UserController {
       name,
     }
 
+    const userAlreadyExists = await UserRepository.findByName(newUser.name)
+
+    if (userAlreadyExists) {
+      return reply.status(400).send({
+        message: 'User already exists',
+      })
+    }
+
     await UserRepository.create(newUser)
 
     return reply.status(201).send()
