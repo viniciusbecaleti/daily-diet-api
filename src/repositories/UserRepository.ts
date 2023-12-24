@@ -5,6 +5,12 @@ interface User {
 }
 
 class UserRepository {
+  async findById(id: string) {
+    const user = await knex('users').where({ id }).first()
+
+    return user
+  }
+
   async findByName(name: string) {
     const user = await knex('users').where({ name }).first()
 
@@ -12,12 +18,6 @@ class UserRepository {
   }
 
   async create(newUser: User) {
-    const user = await this.findByName(newUser.name)
-
-    if (user) {
-      throw new Error('User already exists')
-    }
-
     await knex('users').insert(newUser)
   }
 }
