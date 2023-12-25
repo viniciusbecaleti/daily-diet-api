@@ -5,22 +5,21 @@ import UserRepository from '../repositories/UserRepository'
 
 class MealController {
   async store(request: FastifyRequest, reply: FastifyReply) {
+    const sessionId = request.cookies.sessionId!
+
     const createMealBodySchema = z.object({
       name: z.string(),
       description: z.string(),
       diet: z.enum(['yes', 'no']),
-      userId: z.string().uuid(),
     })
 
-    const { name, description, diet, userId } = createMealBodySchema.parse(
-      request.body,
-    )
+    const { name, description, diet } = createMealBodySchema.parse(request.body)
 
     const newMeal = {
       name,
       description,
       diet,
-      userId,
+      userId: sessionId,
     }
 
     const userExists = await UserRepository.findById(newMeal.userId)
