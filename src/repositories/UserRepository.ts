@@ -17,6 +17,12 @@ class UserRepository {
     return user
   }
 
+  async findByEmail(email: string) {
+    const user = await knex('users').where({ email }).first()
+
+    return user
+  }
+
   async create(newUser: User) {
     await knex('users').insert(newUser)
   }
