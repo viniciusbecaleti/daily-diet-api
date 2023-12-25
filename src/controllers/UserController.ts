@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import UserRepository from '../repositories/UserRepository'
+import { hash } from 'bcrypt'
 
 class UserController {
   /* async index(request: FastifyRequest, reply: FastifyReply) {} */
@@ -10,15 +11,19 @@ class UserController {
   async store(request: FastifyRequest, reply: FastifyReply) {
     const createUserBodySchema = z.object({
       name: z.string(),
+      email: z.string().email(),
+      password: z.string().min(4),
     })
 
-    const { name } = createUserBodySchema.parse(request.body)
+    const { name, email, password } = createUserBodySchema.parse(request.body)
 
     const newUser = {
       name,
+      email,
+      password: await hash(password, 10),
     }
 
-    const userAlreadyExists = await UserRepository.findByName(newUser.name)
+    const userAlreadyExists = await UserRepository.findByEmail(newUser.email)
 
     if (userAlreadyExists) {
       return reply.status(400).send({
