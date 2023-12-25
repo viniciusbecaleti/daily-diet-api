@@ -8,6 +8,28 @@ interface Meal {
 }
 
 class MealRepository {
+  async findAll(sessionId: string) {
+    const meals = await knex('meals')
+      .select('id', 'name', 'description', 'diet')
+      .where({
+        userId: sessionId,
+      })
+
+    return meals
+  }
+
+  async findById(mealId: string, sessionId: string) {
+    const meal = await knex('meals')
+      .select('id', 'name', 'description', 'diet')
+      .where({
+        id: mealId,
+        userId: sessionId,
+      })
+      .first()
+
+    return meal
+  }
+
   async create(newMeal: Meal) {
     await knex('meals').insert(newMeal)
   }
