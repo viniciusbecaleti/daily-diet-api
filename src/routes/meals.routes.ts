@@ -8,4 +8,5 @@ export async function mealsRoutes(app: FastifyInstance) {
   })
 
   app.post('/', MealController.store)
+  app.delete('/:mealId', MealController.delete)
 }

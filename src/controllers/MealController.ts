@@ -34,6 +34,20 @@ class MealController {
 
     return reply.status(201).send()
   }
+
+  async delete(request: FastifyRequest, reply: FastifyReply) {
+    const sessionId = request.cookies.sessionId!
+
+    const deleteMealParamsSchema = z.object({
+      mealId: z.string().uuid(),
+    })
+
+    const { mealId } = deleteMealParamsSchema.parse(request.params)
+
+    await MealRepository.delete(mealId, sessionId)
+
+    return reply.status(200).send()
+  }
 }
 
 export default new MealController()
