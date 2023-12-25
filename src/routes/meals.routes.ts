@@ -7,6 +7,8 @@ export async function mealsRoutes(app: FastifyInstance) {
     checkSessionIdExists(request, reply)
   })
 
+  app.get('/', MealController.index)
+  app.get('/:mealId', MealController.show)
   app.post('/', MealController.store)
   app.delete('/:mealId', MealController.delete)
 }

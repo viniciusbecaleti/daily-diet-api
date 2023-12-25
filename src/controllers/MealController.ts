@@ -4,6 +4,28 @@ import MealRepository from '../repositories/MealRepository'
 import UserRepository from '../repositories/UserRepository'
 
 class MealController {
+  async index(request: FastifyRequest, reply: FastifyReply) {
+    const sessionId = request.cookies.sessionId!
+
+    const meals = await MealRepository.findAll(sessionId)
+
+    return reply.status(200).send(meals)
+  }
+
+  async show(request: FastifyRequest, reply: FastifyReply) {
+    const sessionId = request.cookies.sessionId!
+
+    const showMealParamsSchema = z.object({
+      mealId: z.string().uuid(),
+    })
+
+    const { mealId } = showMealParamsSchema.parse(request.params)
+
+    const meal = await MealRepository.findById(mealId, sessionId)
+
+    return reply.status(200).send(meal)
+  }
+
   async store(request: FastifyRequest, reply: FastifyReply) {
     const sessionId = request.cookies.sessionId!
 
